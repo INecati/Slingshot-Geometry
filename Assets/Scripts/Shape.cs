@@ -1,3 +1,4 @@
+using Assets.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,8 @@ public class Shape : MonoBehaviour
 
     [SerializeField] private int health;
     [SerializeField] private float speed;
+    [SerializeField] protected BallType ballDropType;
+    [SerializeField] protected int ballDropAmount;
 
     [SerializeField] private TMP_Text txtHealth;
     //{
@@ -46,13 +49,12 @@ public class Shape : MonoBehaviour
         health -= damage;
         txtHealth?.SetText(health.ToString());
         if (health <= 0)
-        {
-            Death();
-        }
+            OnShapeDestroy();
     }
-    public void Death()
+    public void OnShapeDestroy()
     {
         FindObjectOfType<ScoreSystem>().AddScore(scoreValue);
+        BallInventory.instance.AddBall(ballDropType, ballDropAmount);
         Destroy(gameObject);
     }
 }

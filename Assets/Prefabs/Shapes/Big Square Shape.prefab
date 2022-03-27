@@ -102,6 +102,8 @@ MonoBehaviour:
   shapeDifficulty: 3
   health: 5
   speed: 0.8
+  ballDropType: 1
+  ballDropAmount: 1
   txtHealth: {fileID: 4686532005520280736}
 --- !u!50 &2015938251536595350
 Rigidbody2D:

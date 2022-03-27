@@ -12,7 +12,20 @@ public class ExplosiveBall : Ball
     {
         
     }
+    protected new void OnBallDestroy()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, areaOfEffect);
+        foreach (var col in colliders)
+        {
+            if (col.CompareTag("Shape"))
+            {
+                col.GetComponent<Shape>().TakeDamage(explosionDamage);
+            }
 
+        }
+        Destroy(Instantiate(explosionEffect, transform.position, Quaternion.identity), 1f);
+        Destroy(gameObject);
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Shape"))
@@ -20,21 +33,7 @@ public class ExplosiveBall : Ball
             collision.gameObject.GetComponent<Shape>().TakeDamage(damage);
             durability--;
             if (!isDurable && durability <= 0)
-            {
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(gameObject.transform.position, areaOfEffect);
-                foreach(var col in colliders)
-                {
-                    if (col.CompareTag("Shape"))
-                    {
-                        col.GetComponent<Shape>().TakeDamage(explosionDamage);
-                    }
-                    
-                }
-                Destroy(Instantiate(explosionEffect,transform.position,Quaternion.identity),1f);
-                Destroy(gameObject);
-            }
-                
-            //Debug.Log("Hit Shape: " + collision.collider.name);
+                OnBallDestroy();
         }
     }
 }

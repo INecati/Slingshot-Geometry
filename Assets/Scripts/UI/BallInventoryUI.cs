@@ -1,4 +1,4 @@
-using Assets.Entities;
+﻿using Assets.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -29,13 +29,11 @@ public class BallInventoryUI : MonoBehaviour
         btnBigBall.onClick.AddListener(delegate { SelectBall(BallType.BigBall); });
         btnExplosiveBall.onClick.AddListener(delegate { SelectBall(BallType.ExplosiveBall); });
         ballLauncher.OnBallLaunched += BallLauncher_OnBallLaunched;
+        BallInventory.instance.OnInventoryUpdate += BallInventory_OnInventoryUpdate;
         UpdateBtnText();
+        txtBasicBall.text = "Basic Ball: ∞";
     }
 
-    private void BallLauncher_OnBallLaunched(object sender, System.EventArgs e)
-    {
-        UpdateBtnText();
-    }
 
     private void SelectBall(BallType ballType)
     {
@@ -44,30 +42,22 @@ public class BallInventoryUI : MonoBehaviour
             //currentBallType = ballType;
             UpdateBtnText();
         }
-
+        
     }
     private void UpdateBtnText()
     {
-        txtBasicBall.text = "Basic Ball: " + ballLauncher.ballCounts[(int)BallType.BasicBall];
-        txtBigBall.text = "Big Ball: " + ballLauncher.ballCounts[(int)BallType.BigBall];
-        txtExplosiveBall.text = "Explosive Ball: " + ballLauncher.ballCounts[(int)BallType.ExplosiveBall];
-        //txtBasicBall.text = "Basic Ball: " + ballLauncher.ballCounts[(int)BallType.ExplosiveBall];
+        //txtBasicBall.text = "Basic Ball: " + BallInventory.instance.GetBallCount(BallType.BasicBall);
+        txtBigBall.text = "Big Ball: " + BallInventory.instance.GetBallCount(BallType.BigBall);
+        txtExplosiveBall.text = "Explosive Ball: " + BallInventory.instance.GetBallCount(BallType.ExplosiveBall);
     }
-    //public void SelectBasicBall()
-    //{
-    //    if (BallInventory.instance.basicBallCount>0) {
-    //        ballLauncher.selectedBallType = basicBall;
-    //    }
-    //}
-    //public void SelectBigBall()
-    //{
-    //    if (BallInventory.instance.bigBallCount > 0)
-    //    {
-    //        ballLauncher.selectedBallType = bigBall;
-    //    }
-    //}
-    //public void SelectExplosiveBall()
-    //{
 
-    //}
+    private void BallInventory_OnInventoryUpdate(object sender, System.EventArgs e)
+    {
+        UpdateBtnText();
+    }
+
+    private void BallLauncher_OnBallLaunched(object sender, System.EventArgs e)
+    {
+        UpdateBtnText();
+    }
 }

@@ -123,6 +123,8 @@ MonoBehaviour:
   shapeDifficulty: 3
   health: 6
   speed: 0.8
+  ballDropType: 2
+  ballDropAmount: 1
   txtHealth: {fileID: 6065372641868644050}
 --- !u!60 &5371830882408503768
 PolygonCollider2D:
