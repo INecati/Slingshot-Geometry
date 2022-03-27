@@ -9,7 +9,6 @@ public class BallLauncher : MonoBehaviour
 {
 
     [SerializeField] private Rigidbody2D pivot;
-    //[SerializeField] private Transform arrowT;
     [SerializeField] private SpriteRenderer arrow;
     [SerializeField] private float arrowLengthMultiplier;
 
@@ -20,8 +19,6 @@ public class BallLauncher : MonoBehaviour
 
     [SerializeField] private BallInventoryUI BallInventoryUI;
 
-
-    //[SerializeField] private GameObject currentBall;
     private GameObject currentBall;
     public GameObject CurrentBall { 
         get { return currentBall; }
@@ -37,27 +34,18 @@ public class BallLauncher : MonoBehaviour
     public BallType currentBallType = BallType.BasicBall;
     [SerializeField] private Rigidbody2D currentBallRb;
     [SerializeField] private GameObject[] ballPrefabs;
-    //private float[] ballCounts;
-    //public GameObject selectedBallType;
-
 
     private Camera mainCamera;
     private bool isDragging = false;
 
     public Vector3 directionUp;//no need?
     public event EventHandler OnBallLaunched;
-    // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
-        //arrow = arrowT.GetComponent<SpriteRenderer>();
-
         SpawnNewBall();
         //timeToBallRespawn = 0;
     }
-
-
-    // Update is called once per frame
     void Update()
     {
         //if (IsInvoking(nameof(SpawnNewBall)))
@@ -75,7 +63,6 @@ public class BallLauncher : MonoBehaviour
             currentBallType = ballType;
             if (!IsInvoking(nameof(SpawnNewBall)))
                 SpawnNewBall();
-            //SpawnNewBall();
         }
         return ballSelected;
     }
@@ -100,16 +87,11 @@ public class BallLauncher : MonoBehaviour
 
         isDragging = true;
         arrow.enabled = true;
-        //currentBallRigidbody.isKinematic = true;
 
         if(Vector2.Distance(worldPosition, pivot.position) > maxPullLength)
             currentBallRb.position = pivot.position + (new Vector2(worldPosition.x - pivot.position.x, worldPosition.y - pivot.position.y)).normalized * maxPullLength;
         else
             currentBallRb.position = worldPosition;
-
-
-
-        //arrow.LookAt(currentBallRb.position, directionUp);
         arrow.transform.right = -(new Vector3(currentBallRb.position.x, currentBallRb.position.y,0) - arrow.transform.position);
         
         arrow.size = new Vector2(Vector2.Distance(pivot.position, currentBallRb.position) * arrowLengthMultiplier, arrow.size.y);
@@ -134,14 +116,5 @@ public class BallLauncher : MonoBehaviour
         OnBallLaunched?.Invoke(this, EventArgs.Empty);
         Invoke(nameof(SpawnNewBall), ballRespawnTime);
         //timeToBallRespawn = ballRespawnTime;
-        //SpawnNewBall();
     }
-
-    //private void DetachBall()
-    //{
-    //    currentBallSprintJoint.enabled = false;
-    //    currentBallSprintJoint = null;
-
-    //    Invoke(nameof(SpawnNewBall), respawnDelay);
-    //}
 }

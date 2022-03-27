@@ -15,11 +15,8 @@ public abstract class Ball : MonoBehaviour
 
     protected void Start()
     {
-        //Debug.Log("Ball Start()");
-        
     }
     public void OnFired() {
-        //Debug.Log("OnFired Ball");
         if (lifeSpan > 0)
             Destroy(gameObject, lifeSpan);
     }
@@ -35,7 +32,6 @@ public abstract class Ball : MonoBehaviour
             durability--;
             if (!isDurable && durability <= 0)
                 OnBallDestroy();
-            //Debug.Log("Hit Shape: " + collision.collider.name);
         }
     }
 }

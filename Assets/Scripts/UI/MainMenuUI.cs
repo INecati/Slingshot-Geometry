@@ -10,7 +10,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button btnStart;
     [SerializeField] private Button btnExit;
     [SerializeField] private TMP_Text highScoreText;
-    // Start is called before the first frame update
     void Start()
     {
         btnStart.onClick.AddListener(delegate { StartGame(); });

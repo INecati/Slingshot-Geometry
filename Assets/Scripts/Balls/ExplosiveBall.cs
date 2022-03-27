@@ -7,7 +7,6 @@ public class ExplosiveBall : Ball
     [SerializeField] protected int explosionDamage;
     [SerializeField] protected float areaOfEffect;
     [SerializeField] private GameObject explosionEffect;
-    // Start is called before the first frame update
     void Start()
     {
         

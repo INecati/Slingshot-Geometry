@@ -15,18 +15,9 @@ public class Shape : MonoBehaviour
     [SerializeField] protected int ballDropAmount;
 
     [SerializeField] private TMP_Text txtHealth;
-    //{
-    //    get { return speed; }
-    //    set
-    //    {
-    //        speed = value;
-    //        moveDirection = new Vector3(0, -speed, 0);
-    //    }
-    //}
     private Vector3 moveDirection;
 
     private Rigidbody2D rb;
-    // Start is called before the first frame update
     void Start()
     {
         txtHealth?.SetText(health.ToString());

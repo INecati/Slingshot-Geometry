@@ -11,9 +11,6 @@ public class BallInventoryUI : MonoBehaviour
 {
 
     [SerializeField] private BallLauncher ballLauncher;
-    //[SerializeField] private GameObject basicBall;
-    //[SerializeField] private GameObject bigBall;
-    //[SerializeField] private GameObject explosiveBall;
 
     [SerializeField] private Button btnBasicBall;
     [SerializeField] private TMP_Text txtBasicBall;
@@ -22,7 +19,6 @@ public class BallInventoryUI : MonoBehaviour
     [SerializeField] private Button btnExplosiveBall;
     [SerializeField] private TMP_Text txtExplosiveBall;
 
-    //[SerializeField] private BallType currentBallType=BallType.BasicBall;
     private void Start()
     {
         btnBasicBall.onClick.AddListener(delegate { SelectBall(BallType.BasicBall); });
@@ -38,8 +34,7 @@ public class BallInventoryUI : MonoBehaviour
     private void SelectBall(BallType ballType)
     {
         Debug.Log("btnBasicBallOnClick: " + ballType.ToString());
-        if (ballLauncher.SelectBallType(ballType)) { 
-            //currentBallType = ballType;
+        if (ballLauncher.SelectBallType(ballType)) {
             UpdateBtnText();
         }
         
