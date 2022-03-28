@@ -15,18 +15,9 @@ public class GameController : MonoBehaviour
         spawner = FindObjectOfType<Spawner>();
         StartGame();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void StartGame()
     {
         Debug.Log("StartGame()");
-        //FindObjectOfType<Spawner>().StartSpawning();
-        //Invoke(nameof(StartSpawning), initialSpawnDelay);
-        //Spawner spawner = FindObjectOfType<Spawner>();
         spawner.Invoke(nameof(spawner.StartSpawning), initialSpawnDelay);
     }
     public void EndGame()

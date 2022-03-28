@@ -48,14 +48,7 @@ public class Spawner : MonoBehaviour
     {
         while (true)
         {
-            //Instantiate(basicShape, new Vector3(spawnPoint.position.x + Random.Range(-spawnAreaWidth, spawnAreaWidth), spawnPoint.position.y, 0), basicShape.transform.rotation);
-            //Debug.Log(Random.Range(0, spawnFunctionList.Count));
-            //Debug.Log(Random.Range(0, shapes.Length));
-
             float waitTime = spawnFunctionList[Random.Range(0, spawnFunctionList.Count)](shapes[Random.Range(0, shapes.Length)]);
-            //float waitTime = spawnFunctionList[0](shapes[0]);
-
-            //yield return new WaitForSeconds(spawnInterval);
             yield return new WaitForSeconds(waitTime);
         }
         yield return null;

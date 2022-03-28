@@ -1,3 +1,4 @@
+using Assets.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,29 +11,18 @@ public class Shape : MonoBehaviour
 
     [SerializeField] private int health;
     [SerializeField] private float speed;
+    [SerializeField] protected BallType ballDropType;
+    [SerializeField] protected float dropChance;
 
     [SerializeField] private TMP_Text txtHealth;
-    //{
-    //    get { return speed; }
-    //    set
-    //    {
-    //        speed = value;
-    //        moveDirection = new Vector3(0, -speed, 0);
-    //    }
-    //}
     private Vector3 moveDirection;
 
     private Rigidbody2D rb;
-    // Start is called before the first frame update
     void Start()
     {
         txtHealth?.SetText(health.ToString());
         rb = GetComponent<Rigidbody2D>();
         moveDirection = new Vector3(0, -speed, 0);
-        foreach(Transform tran in transform)
-        {
-            var x1 = tran.name;
-        }
     }
 
     private void FixedUpdate()
@@ -46,13 +36,13 @@ public class Shape : MonoBehaviour
         health -= damage;
         txtHealth?.SetText(health.ToString());
         if (health <= 0)
-        {
-            Death();
-        }
+            OnShapeDestroy();
     }
-    public void Death()
+    public void OnShapeDestroy()
     {
         FindObjectOfType<ScoreSystem>().AddScore(scoreValue);
+        if (dropChance >= Random.Range(0f, 1f))
+            BallInventory.instance.AddBall(ballDropType, 1);
         Destroy(gameObject);
     }
 }
