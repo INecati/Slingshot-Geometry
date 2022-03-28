@@ -12,7 +12,7 @@ public class Shape : MonoBehaviour
     [SerializeField] private int health;
     [SerializeField] private float speed;
     [SerializeField] protected BallType ballDropType;
-    [SerializeField] protected int ballDropAmount;
+    [SerializeField] protected float dropChance;
 
     [SerializeField] private TMP_Text txtHealth;
     private Vector3 moveDirection;
@@ -23,10 +23,6 @@ public class Shape : MonoBehaviour
         txtHealth?.SetText(health.ToString());
         rb = GetComponent<Rigidbody2D>();
         moveDirection = new Vector3(0, -speed, 0);
-        foreach(Transform tran in transform)
-        {
-            var x1 = tran.name;
-        }
     }
 
     private void FixedUpdate()
@@ -45,7 +41,8 @@ public class Shape : MonoBehaviour
     public void OnShapeDestroy()
     {
         FindObjectOfType<ScoreSystem>().AddScore(scoreValue);
-        BallInventory.instance.AddBall(ballDropType, ballDropAmount);
+        if (dropChance >= Random.Range(0f, 1f))
+            BallInventory.instance.AddBall(ballDropType, 1);
         Destroy(gameObject);
     }
 }

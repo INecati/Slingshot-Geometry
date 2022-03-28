@@ -52,7 +52,7 @@ MonoBehaviour:
   damage: 1
   lifeSpan: 0
   explosionDamage: 1
-  areaOfEffect: 5
+  areaOfEffect: 4
   explosionEffect: {fileID: 2084266300487050309, guid: 790bc29c1fbd6e94c883c4bf0f877925, type: 3}
 --- !u!212 &1641568380162703465
 SpriteRenderer:

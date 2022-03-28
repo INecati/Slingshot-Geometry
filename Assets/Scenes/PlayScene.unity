@@ -2669,7 +2669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea4974dc8a1dff4fb4e1edeac211bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballCounts: 0a0000000200000002000000
+  ballCounts: 0a00000005000000f4010000
 --- !u!114 &818184476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,7 +3078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &931860214
 Transform:
   m_ObjectHideFlags: 0
