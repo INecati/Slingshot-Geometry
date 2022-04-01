@@ -5,45 +5,47 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class BallInventoryUI : MonoBehaviour
 {
 
     [SerializeField] private BallLauncher ballLauncher;
 
-    [SerializeField] private Button btnBasicBall;
-    [SerializeField] private TMP_Text txtBasicBall;
-    [SerializeField] private Button btnBigBall;
-    [SerializeField] private TMP_Text txtBigBall;
-    [SerializeField] private Button btnExplosiveBall;
-    [SerializeField] private TMP_Text txtExplosiveBall;
-
+    [SerializeField] private BallSelectButton[] ballButtons;
+    [SerializeField] private Color defaultBtnColor;
+    [SerializeField] private Color selectedBtnColor;
     private void Start()
     {
-        btnBasicBall.onClick.AddListener(delegate { SelectBall(BallType.BasicBall); });
-        btnBigBall.onClick.AddListener(delegate { SelectBall(BallType.BigBall); });
-        btnExplosiveBall.onClick.AddListener(delegate { SelectBall(BallType.ExplosiveBall); });
         ballLauncher.OnBallLaunched += BallLauncher_OnBallLaunched;
         BallInventory.instance.OnInventoryUpdate += BallInventory_OnInventoryUpdate;
+
+        for (int i = 0; i < ballButtons.Length; i++)
+        {
+            BallType ballType = (BallType)i;
+            ballButtons[i].button.onClick.AddListener(delegate { SelectBall(ballType); });
+            ballButtons[i].backgroundImage.color = defaultBtnColor;
+        }
+        ballButtons[(int)ballLauncher.currentBallType].backgroundImage.color = selectedBtnColor;
         UpdateBtnText();
-        txtBasicBall.text = "Basic Ball: ∞";
     }
 
 
     private void SelectBall(BallType ballType)
     {
         Debug.Log("btnBasicBallOnClick: " + ballType.ToString());
+        BallType oldBallType = ballLauncher.currentBallType;
         if (ballLauncher.SelectBallType(ballType)) {
+            ballButtons[(int)oldBallType].backgroundImage.color = defaultBtnColor;
+            ballButtons[(int)ballType].backgroundImage.color = selectedBtnColor;
             UpdateBtnText();
         }
         
     }
     private void UpdateBtnText()
     {
-        //txtBasicBall.text = "Basic Ball: " + BallInventory.instance.GetBallCount(BallType.BasicBall);
-        txtBigBall.text = "Big Ball: " + BallInventory.instance.GetBallCount(BallType.BigBall);
-        txtExplosiveBall.text = "Explosive Ball: " + BallInventory.instance.GetBallCount(BallType.ExplosiveBall);
+        for(int i = 1; i < ballButtons.Length; i++) {
+            BallType ballType = (BallType)i;
+            ballButtons[i].text.text= BallInventory.instance.GetBallCount(ballType).ToString();
+        }
     }
 
     private void BallInventory_OnInventoryUpdate(object sender, System.EventArgs e)
