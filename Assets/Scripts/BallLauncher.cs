@@ -54,6 +54,7 @@ public class BallLauncher : MonoBehaviour
     }
     public bool SelectBallType(BallType ballType)
     {
+        Debug.Log(ballType.ToString());
         bool ballSelected = false;
         if (BallInventory.instance.GetBallCount(ballType) > 0)
         {
