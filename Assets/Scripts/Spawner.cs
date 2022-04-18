@@ -8,19 +8,16 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float spawnAreaWidth;
-    //[SerializeField] private float initialSpawnDelay;
-    
 
-    //[SerializeField] private GameObject basicShape;
-    [SerializeField] private float spawnInterval;
+    [SerializeField] private float initialSpawnInterval;
+    [SerializeField] private float spawnIntervalDecreaseRate;
+    public float spawnInterval;
     [SerializeField] private GameObject[] shapes;
 
     public bool isSpawning = false;
 
 
     public List<Func<GameObject, float>> spawnFunctionList = new List<Func<GameObject, float>>();
-    //public Func<GameObject, float>[] spawnFunctions = new Func<GameObject, float>[3];
-    public delegate float Test1(GameObject gameObject);
     private void Awake()
     {
         spawnFunctionList.Add(SpawnOne);
@@ -29,18 +26,31 @@ public class Spawner : MonoBehaviour
     }
     private void Start()
     {
-        //spawnFunctions = new Func<GameObject, float>() { new Test1(SpawnOne(shape: gameObject)) };
         //Invoke(nameof(StartSpawning), initialSpawnDelay);
+        spawnInterval = initialSpawnInterval;
+        
+    }
+
+    private IEnumerator IncreaseDifficulty()
+    {
+        yield return new WaitForSeconds(20f);
+        while (true)
+        {
+            spawnInterval *= spawnIntervalDecreaseRate;
+            yield return new WaitForSeconds(20f);
+        }
     }
     public void StartSpawning() {
         if (!isSpawning)
         {
             StartCoroutine(nameof(Spawn));
+            StartCoroutine(nameof(IncreaseDifficulty));
             isSpawning = true;
         }
     }
     public void StopSpawning() {
         StopCoroutine(nameof(Spawn));
+        StopCoroutine(nameof(IncreaseDifficulty));
         isSpawning = false;
     }
     
@@ -49,9 +59,9 @@ public class Spawner : MonoBehaviour
         while (true)
         {
             float waitTime = spawnFunctionList[Random.Range(0, spawnFunctionList.Count)](shapes[Random.Range(0, shapes.Length)]);
+            Debug.Log("Shape Spawned");
             yield return new WaitForSeconds(waitTime);
         }
-        yield return null;
     }
     private float SpawnOne(GameObject shape)
     {
