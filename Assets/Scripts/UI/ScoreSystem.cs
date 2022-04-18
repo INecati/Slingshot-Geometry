@@ -7,7 +7,7 @@ public class ScoreSystem : MonoBehaviour
 {
     [SerializeField] private TMP_Text txtScore;
     public const string HighScoreKey = "HighScore";
-    public float score { get; private set; }
+    public static float Score { get; private set; }
     void Start()
     {
         txtScore.text = "0";
@@ -15,16 +15,16 @@ public class ScoreSystem : MonoBehaviour
 
     public void AddScore(float value)
     {
-        score += value;
-        txtScore.text = score.ToString();
+        Score += value;
+        txtScore.text = Score.ToString();
     }
     private void OnDestroy()
     {
         int currentHighScore = PlayerPrefs.GetInt(HighScoreKey, 0);
 
-        if (score > currentHighScore)
+        if (Score > currentHighScore)
         {
-            PlayerPrefs.SetInt(HighScoreKey, Mathf.FloorToInt(score));
+            PlayerPrefs.SetInt(HighScoreKey, Mathf.FloorToInt(Score));
         }
     }
 }
